@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DROX - Admin Panel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+    
+    <!-- Admin Login View -->
+    <div id="adminLoginView" class="login-body">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="brand-section">
+                    <div class="lightning-icon">🔐</div>
+                    <h1 class="brand-name">ADMIN PANEL</h1>
+                    <p class="brand-tagline">drox Control Center</p>
+                </div>
+
+                <form id="adminLoginForm" class="login-form">
+                    <div class="input-container">
+                        <input type="email" id="adminEmail" value="admin@drox.com" placeholder="Admin Email" required class="login-input" autocomplete="email">
+                    </div>
+                    <div class="input-container">
+                        <input type="password" id="adminPassword" placeholder="Admin Password" required class="login-input" autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="login-btn">
+                        <span>Access Admin Panel</span>
+                    </button>
+                    <div id="adminLoginError" class="error-message hidden"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="dashboard-container hidden">
+        <header class="dashboard-header">
+            <div class="header-brand">
+                <div class="lightning-icon" style="font-size: 28px;">⚡</div>
+                <h1>ADMIN PANEL</h1>
+            </div>
+            <button id="adminLogout" class="icon-button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke-width="2"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Emote Management -->
+        <section class="panel-section">
+            <div class="section-title">
+                <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01" stroke-width="2"/>
+                </svg>
+                <h2>EMOTE MANAGEMENT</h2>
+            </div>
+
+            <form id="emoteForm" class="admin-form">
+                <input type="hidden" id="editEmoteId">
+                <div class="form-grid">
+                    <div>
+                        <label style="font-size: 12px; color: var(--text-gray); margin-bottom: 5px; display: block;">
+                            Enter Emote ID (9-12 digits)
+                        </label>
+                        <input type="text" id="emoteIdInput" 
+                               placeholder="Enter Emote ID (e.g., 909000012)" 
+                               required class="config-input"
+                               pattern="[0-9]{9,12}"
+                               title="Enter 9-12 digit Emote ID">
+                    </div>
+                    <select id="emoteCategory" required class="config-input">
+                        <option value="">Select Category</option>
+                    </select>
+                </div>
+                <div id="emotePreview" class="emote-preview-container">
+                    <div style="text-align: center; color: var(--text-gray);">
+                        <p>Enter an Emote ID (9-12 digits) above to see preview</p>
+                        <p style="font-size: 11px; margin-top: 5px;">
+                            Auto-generates from: https://cdn.jsdelivr.net/gh/ShahGCreator/icon@main/PNG/[ID].png
+                        </p>
+                    </div>
+                </div>
+                <button type="submit" class="action-btn-large">
+                    <span id="emoteBtnText">ADD EMOTE</span>
+                </button>
+                <button type="button" id="cancelEmoteEdit" class="squad-btn leave hidden">CANCEL</button>
+            </form>
+
+            <div id="emoteList" class="admin-list"></div>
+        </section>
+
+        <!-- Server Management -->
+        <section class="panel-section">
+            <div class="section-title">
+                <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2" stroke-width="2"/>
+                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2" stroke-width="2"/>
+                </svg>
+                <h2>SERVER MANAGEMENT</h2>
+            </div>
+
+            <form id="serverForm" class="admin-form">
+                <input type="hidden" id="editServerId">
+                <div class="form-grid">
+                    <input type="text" id="serverName" placeholder="Server Name (e.g., India Server 1)" required class="config-input">
+                    <input type="url" id="serverUrl" placeholder="https://example.com" required class="config-input">
+                </div>
+                <div class="form-grid">
+                    <select id="serverRegion" required class="config-input">
+                        <option value="">Select Region</option>
+                        <option value="indian">🇮🇳 Indian Servers</option>
+                        <option value="bangladesh">🇧🇩 Bangladesh Servers</option>
+                        <option value="other">🌍 Other Servers</option>
+                    </select>
+                    <input type="number" id="serverOrder" placeholder="Order (1, 2, 3...)" class="config-input" min="1">
+                </div>
+                <button type="submit" class="action-btn-large">
+                    <span id="serverBtnText">ADD SERVER</span>
+                </button>
+                <button type="button" id="cancelServerEdit" class="squad-btn leave hidden">CANCEL</button>
+            </form>
+
+            <div id="serverList" class="admin-list"></div>
+        </section>
+
+        <!-- Category Management -->
+        <section class="panel-section">
+            <div class="section-title">
+                <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M4 6h16M4 12h16M4 18h16" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <h2>CATEGORY MANAGEMENT</h2>
+            </div>
+
+            <form id="categoryForm" class="admin-form">
+                <input type="hidden" id="editCategoryId">
+                <div class="form-grid">
+                    <input type="text" id="categoryName" placeholder="Category Name (e.g., HOT)" required class="config-input">
+                    <input type="text" id="categoryIcon" placeholder="Icon (e.g., 🔥)" class="config-input">
+                </div>
+                <input type="number" id="categoryOrder" placeholder="Order (1, 2, 3...)" class="config-input" min="1">
+                <button type="submit" class="action-btn-large">
+                    <span id="categoryBtnText">ADD CATEGORY</span>
+                </button>
+                <button type="button" id="cancelCategoryEdit" class="squad-btn leave hidden">CANCEL</button>
+            </form>
+
+            <div id="categoryList" class="admin-list"></div>
+        </section>
+
+        <!-- Footer Links -->
+        <section class="panel-section">
+            <div class="section-title">
+                <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" stroke-width="2"/>
+                </svg>
+                <h2>FOOTER LINKS</h2>
+            </div>
+
+            <form id="linksForm" class="admin-form">
+                <input type="url" id="telegramUrl" placeholder="Telegram URL" required class="config-input">
+                <input type="url" id="githubUrl" placeholder="GitHub URL" required class="config-input">
+                <input type="url" id="discordUrl" placeholder="Discord URL" required class="config-input">
+                <input type="url" id="youtubeUrl" placeholder="YouTube URL" required class="config-input">
+                <button type="submit" class="action-btn-large">
+                    <span>UPDATE LINKS</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- Maintenance Mode -->
+        <section class="panel-section">
+            <div class="section-title">
+                <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" stroke-width="2"/>
+                </svg>
+                <h2>MAINTENANCE MODE</h2>
+            </div>
+
+            <form id="maintenanceForm" class="admin-form">
+                <div class="toggle-container">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="maintenanceToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-label">Enable Maintenance Mode</span>
+                </div>
+                <textarea id="maintenanceMessage" placeholder="Maintenance message for users..." rows="3" class="config-input"></textarea>
+                <button type="submit" class="action-btn-large">
+                    <span>SAVE SETTINGS</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- Password Manager -->
+        <section class="panel-section">
+            <div class="section-title">
+                <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke-width="2"/>
+                    <path d="M7 11V7a5 5 0 0110 0v4" stroke-width="2"/>
+                </svg>
+                <h2>LOGIN PASSWORD</h2>
+            </div>
+
+            <form id="passwordForm" class="admin-form">
+                <input type="password" id="newPassword" placeholder="New Login Password" required class="config-input">
+                <button type="submit" class="action-btn-large">
+                    <span>UPDATE PASSWORD</span>
+                </button>
+            </form>
+        </section>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="adminLoader" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p>Processing...</p>
+    </div>
+
+    <script type="module" src="js/admin.js"></script>
+</body>
+</html>
